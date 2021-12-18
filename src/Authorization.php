@@ -44,7 +44,7 @@ class Authorization
     private function getRedisClient()
     {
         $redisConfig = $this->config['redis'] ?? [];
-        return new \Predis\Client($redisConfig, $redisConfig['options']);
+        return new \Predis\Client($redisConfig, $redisConfig['options']??[]);
     }
 
 
@@ -72,7 +72,7 @@ class Authorization
 
     private function getUrl()
     {
-        return $this->config['frontend_url'] ?? '';
+        return $this->config['backend_url'] ?? '';
     }
 
     private function getRedisPrefix()
@@ -215,6 +215,7 @@ class Authorization
     {
         $response = [
             'code' => 1,
+            'state'=>'000001',
             'msg' => '允许访问',
         ];
         $prefix = 'zlj_oa_database_';
@@ -223,12 +224,14 @@ class Authorization
             $exist = $this->getRedisClient()->exists($key);
             if (!$exist) {
                 $response['code'] = 401;
+                $response['state'] = '000401';
                 $response['msg'] = '鉴权失败';
             } else {
                 $clientPermissionsAndMenuTree = $this->getRedisClient()->get($key);
                 $clientPermissionsAndMenuTree = \json_decode($clientPermissionsAndMenuTree, true);
                 if (!$clientPermissionsAndMenuTree || (!$clientPermissionsAndMenuTree['user']['is_super_admin'] && !in_array($uri, $clientPermissionsAndMenuTree['permissions']))) {
                     $response['code'] = 403;
+                    $response['state'] = '000403';
                     $response['msg'] = '禁止访问';
                 }
             }
@@ -246,6 +249,7 @@ class Authorization
     public function checkIsLoginByCache()
     {
         $response = [
+            'state'=>'000001',
             'code' => 1,
             'msg' => '在线',
         ];
@@ -255,6 +259,7 @@ class Authorization
             $exist = $this->getRedisClient()->exists($key);
             if (!$exist) {
                 $response['code'] = 401;
+                $response['state'] = '000401';
                 $response['msg'] = '鉴权失败';
             }
             return $response;
@@ -273,6 +278,7 @@ class Authorization
     {
         $response = [
             'code' => 1,
+            'state'=>'000001',
             'msg' => '获取用户成功',
 
         ];
@@ -282,6 +288,7 @@ class Authorization
             $exist = $this->getRedisClient()->exists($key);
             if (!$exist) {
                 $response['code'] = 401;
+                $response['state'] = '000401';
                 $response['msg'] = '鉴权失败';
             }else{
                 $user = $this->getRedisClient()->get($key);
