@@ -1,6 +1,6 @@
 <?php
 
-namespace Zlj\Oa;
+namespace Yc\UserCenter;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {

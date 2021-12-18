@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zlj\Oa\Exceptions;
+namespace Yc\UserCenter\Exceptions;
 
 
 class RedisException extends Exception

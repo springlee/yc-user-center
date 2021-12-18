@@ -1,11 +1,11 @@
 <?php
 
-namespace Zlj\Oa;
+namespace Yc\UserCenter;
 
 use GuzzleHttp\Client;
-use Zlj\Oa\Exceptions\HttpException;
-use Zlj\Oa\Exceptions\InvalidArgumentException;
-use Zlj\Oa\Exceptions\RedisException;
+use Yc\UserCenter\Exceptions\HttpException;
+use Yc\UserCenter\Exceptions\InvalidArgumentException;
+use Yc\UserCenter\Exceptions\RedisException;
 
 class Authorization
 {
@@ -13,15 +13,6 @@ class Authorization
     protected $config;
 
     protected $guzzleOptions = [];
-
-    protected $redisOptions = [];
-
-    protected $urls = [
-        'local' => 'http://oa.zhaoliangji.test',
-        'dev' => 'https://testoaapi.zhaoliangji.com',
-        'pre' => 'http://intranet-preoaapi.zhaoliangji.com',
-        'prod' => 'http://intranet-oaapi.zhaoliangji.com',
-    ];
 
     protected $token;
 
@@ -81,11 +72,12 @@ class Authorization
 
     private function getUrl()
     {
-        $mode = $this->config['mode'] ?? 'dev';
-        if (!in_array(strtolower($mode), ['local', 'dev', 'pre', 'prod'])) {
-            throw new InvalidArgumentException('invalid mode : ' . $mode);
-        }
-        return $this->urls[$mode];
+        return $this->config['frontend_url'] ?? '';
+    }
+
+    private function getRedisPrefix()
+    {
+        return $this->config['redis']['prefix'] ?? '';
     }
 
     /**
@@ -257,7 +249,7 @@ class Authorization
             'code' => 1,
             'msg' => '在线',
         ];
-        $prefix = 'zlj_oa_database_';
+        $prefix = $this->getRedisPrefix();
         $key = $prefix . $this->token;
         try {
             $exist = $this->getRedisClient()->exists($key);
@@ -284,7 +276,7 @@ class Authorization
             'msg' => '获取用户成功',
 
         ];
-        $prefix = 'zlj_oa_database_';
+        $prefix = $this->getRedisPrefix();
         $key = $prefix . $this->token;
         try {
             $exist = $this->getRedisClient()->exists($key);

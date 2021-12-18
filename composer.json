@@ -1,6 +1,6 @@
 {
-    "name": "springlee/zljoa",
-    "description": "找靓机授权 SDK",
+    "name": "springlee/yc-user-center",
+    "description": "元巢用户中心 SDK",
     "license": "MIT",
     "authors": [
         {
@@ -9,19 +9,19 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.4",
         "guzzlehttp/guzzle": "^6.3",
         "predis/predis": "^1.1"
     },
     "autoload": {
         "psr-4": {
-            "Zlj\\Oa\\": "src"
+            "Yc\\UserCenter\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Zlj\\Oa\\ServiceProvider"
+                "Yc\\UserCenter\\ServiceProvider"
             ]
         }
     }

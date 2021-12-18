@@ -3,12 +3,12 @@
 <p align="center"> .</p>
 
 ## 项目文档
-找靓机OA文档 [https://oaapi.zhaoliangji.com/docs](https://oaapi.zhaoliangji.com/docs)
+元巢用户中心文档 [http://test.api.user-center.namet.xyz/docs](http://test.api.user-center.namet.xyz/docs)
 
 ## composer安装
 
 ```shell
-$ composer require springlee/zljoa
+$ composer require springlee/yc-user-center
 ```
 
 ## 普通php项目
@@ -17,13 +17,12 @@ $ composer require springlee/zljoa
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-use Zlj\Oa\Authorization;
+use Yc\UserCenter\Authorization;
 
 
 $config = [
     'app_key' => 'zlj_dt5tyRElS9yy9vAafWoarHjeZ',//必填
     'app_secret' => 'vywE8L6JfkZcKksBqAlVJL4B8oNUG8',//必填
-    'mode' => 'dev',//非必填
     //redis配置
     'redis'=>[
         'host'=>'127.0.0.1',
@@ -39,14 +38,14 @@ $app = new Authorization($config);
 
 ## 发布配置
 ```$xslt
-php artisan vendor:publish --provider="Zlj\Oa\ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Yc\UserCenter\ServiceProvider" --tag="config"
 ```
 ## 请求示例
 ```php
 <?php
 
 namespace App\Http\Controllers;
-use Zlj\Oa\Authorization;
+use Yc\UserCenter\Authorization;
 class HomeController extends Controller
 {
 
