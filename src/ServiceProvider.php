@@ -9,7 +9,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app->singleton(Authorization::class, function () {
-            return new Authorization(config('zljoa'));
+            return new Authorization(config('yc_user_center'));
         });
 
         $this->app->alias(Authorization::class, 'authorization');
