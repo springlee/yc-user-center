@@ -9,7 +9,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app->singleton(Authorization::class, function () {
-            return new Authorization(config('zljoa'));
+            return new Authorization(config('yc_user_center'));
         });
 
         $this->app->alias(Authorization::class, 'authorization');
@@ -23,7 +23,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/zljoa.php' => config_path('zljoa.php'),
+            __DIR__ . '/../config/yc_user_center.php' => config_path('yc_user_center.php'),
         ], 'config');
     }
 }
